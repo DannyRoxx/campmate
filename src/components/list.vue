@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="list">
         <input class="inputArea" type="text" placeholder="Add item to list ..." v-model="todo.title">
         <!-- <input type="checkbox" v-model="todo.completed"> -->
         <button class="addBtn" @click="addTodo()">Add</button>
@@ -16,6 +16,10 @@
 </template>
 
 <style>
+.list {
+  margin: 5% 25%;
+}
+
 .inputArea {
     width: 70%;
     border: 2px solid black;
@@ -28,6 +32,11 @@
     border: 2px solid black;
     padding: 1%;
     font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.addBtn:hover {
+  background-color: #cccccc;
 }
 
 ul {
@@ -136,8 +145,8 @@ ul {
 }
 
 .removeBtn:hover {
-    background-color: #666;
-    border: 2px solid #666;
+    background-color: #bbb;
+    border: 2px solid #bbb;
     color: white;
 }
 
