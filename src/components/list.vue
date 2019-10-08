@@ -1,6 +1,6 @@
 <template>
     <div class="list">
-        <input class="inputArea" type="text" placeholder="Add item to list ..." v-model="todo.title">
+        <input class="inputArea" @keyup.enter="addTodo()" type="text" placeholder="Add item to list ..." v-model="todo.title">
         <!-- <input type="checkbox" v-model="todo.completed"> -->
         <button class="addBtn" @click="addTodo()">Add</button>
 
@@ -153,6 +153,8 @@ ul {
 </style>
 
 <script>
+import { bus } from '@/main.js'
+
 export default {
   name: 'home',
   data() {
@@ -195,6 +197,11 @@ export default {
             }
         }, false);
     }
+  },
+  created() {
+   bus.$on('create-camping', (data) => {
+    console.log(data)
+   })
   }
 }
 </script>

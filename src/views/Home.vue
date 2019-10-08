@@ -1,16 +1,7 @@
 <template>
   <div class="home">
     <h1>CAMP MATE</h1>
-    
-    <div class="preset-menu">
-        <p>Presets (pil ned)</p>
-        <ul class="presets">
-            <li class="preset" @click="addPreset1()">Camping</li>
-            <li class="preset" @click="addPreset2()">Festival</li>
-            <li class="preset" @click="addPreset3()">Travel</li>
-        </ul>
-    </div>
-
+    <preset />
     <list />
   </div>
 </template>
@@ -19,7 +10,7 @@
 // @ is an alias to /src
 import topbob from '@/components/topbob.vue'
 import list from '@/components/list.vue'
-import presets from '@/components/presets.vue'
+import preset from '@/components/preset.vue'
 import {
   db
 } from '../firebaseConfig'
@@ -30,14 +21,11 @@ export default {
   components: {
     topbob,
     list,
-    presets
-  },
-  methods: {
-    addPresent1() {
-      
-    }
+    preset
   }
 }
+
+
 </script>
 
 <style>
@@ -66,4 +54,14 @@ export default {
     padding: 2%;
     cursor: pointer;
   }
+
+  p img {
+      transform: rotate(0deg);
+      width: 1.5%;
+    }
+
+  p img:hover {
+      transform: rotate(90deg);
+      width: 1.5%;
+    }
 </style>
