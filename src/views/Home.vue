@@ -11,10 +11,6 @@
 import topbob from '@/components/topbob.vue'
 import list from '@/components/list.vue'
 import preset from '@/components/preset.vue'
-import {
-  db
-} from '../firebaseConfig'
-
 
 export default {
   name: 'home',
@@ -29,17 +25,26 @@ export default {
 </script>
 
 <style>
+  body {
+    background-image: url(../../img/background.jpeg);
+    background-position: center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    margin: 0;
+  }
+
   h1 {
     font-size: 3rem;
     padding: 1rem;
     margin: 0;
-    color: #ffffff;
-    background-color: black;
+    color: #f7f7f7;
+    background-color: #232422;
   }
 
   .preset-menu {
-    margin: 1% 25%;
+    margin: 1% 5%;
     text-align: left;
+    color: #f7f7f7;
   }
 
   .presets {
@@ -47,11 +52,19 @@ export default {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1%;
     text-align: center;
+    color: black;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  
+  .presets li:hover {
+    background-color: #dddddd;
   }
 
   .preset {
-    background-color: red;
-    padding: 2%;
+    background-color: #f7f7f7;
+    padding: 8% 0;
     cursor: pointer;
   }
 

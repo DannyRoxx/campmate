@@ -9,7 +9,7 @@
                 <input type="checkbox" v-model="todo.completed">
                 <span class="checkbox-custom"></span>
             </label>
-            <li>{{ todo.title }} <!-- | Completed: {{ todo.completed }} | --> </li>
+            <li class="listItem">{{ todo.title }} <!-- | Completed: {{ todo.completed }} | --> </li>
             <button class="removeBtn" @click="removeTodo(todo)">X</button>
         </ul>
     </div>
@@ -17,7 +17,7 @@
 
 <style>
 .list {
-  margin: 5% 25%;
+  margin: 5% 5%;
 }
 
 .inputArea {
@@ -29,19 +29,20 @@
 
 .addBtn {
     width: 30%;
-    border: 2px solid black;
+    border: 2px solid #232422;
+    background-color: #bbb;
     padding: 1%;
     font-size: 1.3rem;
     cursor: pointer;
 }
 
 .addBtn:hover {
-  background-color: #cccccc;
+  background-color: #aaa;
 }
 
 ul {
     list-style-type: none;
-    background-color: lightgray;
+    background-color: #f7f7f7;
     padding: 1%;
     margin-top: 2%;
     margin-bottom: 2%;
@@ -49,6 +50,10 @@ ul {
     grid-template-columns: 10% 85% 5%;
     text-align: left;
     font-size: 1.2rem;
+}
+
+.listItem {
+  color: black;
 }
 
 /* Styling Checkbox Starts */
@@ -83,18 +88,18 @@ ul {
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    border: 2px solid #FFFFFF;
+    border: 2px solid black;
 }
 
 
 .checkbox-label input:checked ~ .checkbox-custom {
-    background-color: #FFFFFF;
+    background-color: #f7f7f7;
     border-radius: 5px;
     -webkit-transform: rotate(0deg) scale(1);
     -ms-transform: rotate(0deg) scale(1);
     transform: rotate(0deg) scale(1);
     opacity:1;
-    border: 2px solid #FFFFFF;
+    border: 2px solid black;
 }
 
 
@@ -106,7 +111,7 @@ ul {
     height: 0px;
     width: 0px;
     border-radius: 5px;
-    border: solid #009BFF;
+    border: solid black;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(0deg) scale(0);
     -ms-transform: rotate(0deg) scale(0);
@@ -137,16 +142,16 @@ ul {
 
 .removeBtn {
     cursor: pointer;
-    border: 2px solid #FFFFFF;
+    border: 2px solid black;
     border-radius: 5px;
     color: black;
-    background-color: #FFFFFF;
+    background-color: #f7f7f7;
     font-weight: bold;
 }
 
 .removeBtn:hover {
-    background-color: #bbb;
-    border: 2px solid #bbb;
+    background-color: black;
+    border: 2px solid black;
     color: white;
 }
 
@@ -154,6 +159,9 @@ ul {
 
 <script>
 import { bus } from '@/main.js'
+import {
+  db
+} from '../firebaseConfig'
 
 export default {
   name: 'home',
@@ -169,11 +177,16 @@ export default {
     }
   },
   methods: {
-    addTodo() {
+    async addTodo() {
         if (this.todo.title == '') {
             this.error = "You haven't defined a title."
             return alert(this.error)
         }
+
+        await db.collection('todos').add({
+          title: this.todo.title,
+          completed: this.todo.completed
+        })
 
       let todo = {
         title: this.todo.title,
@@ -184,10 +197,14 @@ export default {
       this.todo.title = ''
       this.todo.completed = false
     },
-    removeTodo(todo) {
+    async removeTodo(todo) {
+      
+
       let removeable = this.todos.indexOf(todo)
 
       this.todos.splice(removeable, 1)
+
+      await db.collection('todos').doc(todo.id).delete()
     },
     checked(todo) {
         var list = document.querySelector('ul');
@@ -198,9 +215,33 @@ export default {
         }, false);
     }
   },
-  created() {
+  async created() {
+    await db.collection('todos').add({
+        title: this.todo.title,
+        completed: this.todo.completed
+    })
+
    bus.$on('create-camping', (data) => {
-    console.log(data)
+    data.forEach(item => {
+      this.todos.push(item)
+    })
+   }),
+   bus.$on('create-festival', (data) => {
+    data.forEach(item => {
+      this.todos.push(item)
+    })
+   }),
+   bus.$on('create-travel', (data) => {
+    data.forEach(item => {
+      this.todos.push(item)
+    })
+   })
+
+   db.collection('todos').get().then((querySnapshot) => {
+     querySnapshot.forEach(doc => this.todos.push({
+       id:doc.id,
+       ...doc.data()
+     }))
    })
   }
 }

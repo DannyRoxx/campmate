@@ -1,6 +1,6 @@
 <template>
   <div class="preset-menu">
-        <p>Presets <img src="../../img/arrow.png" alt="Drop Down"></p>
+        <!-- <p>Presets <img src="../../img/arrow.png" alt="Drop Down"></p> -->
         <preset-list v-show="hidden"/>
     </div>
 </template>
