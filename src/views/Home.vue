@@ -31,6 +31,7 @@ export default {
     background-size: auto;
     background-repeat: no-repeat;
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
   }
 
   h1 {

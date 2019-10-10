@@ -215,27 +215,34 @@ export default {
         }, false);
     }
   },
-  async created() {
-    await db.collection('todos').add({
-        title: this.todo.title,
-        completed: this.todo.completed
-    })
-
+  created() {
    bus.$on('create-camping', (data) => {
     data.forEach(item => {
       this.todos.push(item)
+
+      db.collection('todos').add({
+          title: item.title,
+          completed: item.completed
     })
-   }),
+   })}),
    bus.$on('create-festival', (data) => {
     data.forEach(item => {
       this.todos.push(item)
+
+      db.collection('todos').add({
+          title: item.title,
+          completed: item.completed
     })
-   }),
+   })}),
    bus.$on('create-travel', (data) => {
     data.forEach(item => {
       this.todos.push(item)
+
+      db.collection('todos').add({
+          title: item.title,
+          completed: item.completed
     })
-   })
+   })})
 
    db.collection('todos').get().then((querySnapshot) => {
      querySnapshot.forEach(doc => this.todos.push({

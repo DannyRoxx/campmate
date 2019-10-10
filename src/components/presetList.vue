@@ -13,9 +13,24 @@ export default {
     name: 'preset-list',
   data() {
     return {
-      camping: ['ting1', 'ting2', 'ting3', 'ting4'],
-      festival: ['ting5', 'ting6', 'ting7', 'ting8'],
-      travel: ['ting9', 'ting10', 'ting11', 'ting12']
+      camping: [
+        {title: 'Telt', completed: false},
+        {title: 'Sovepose', completed: false},
+        {title: 'Tandbørste', completed: false},
+        {title: 'Lommelygte', completed: false}
+      ],
+      festival: [
+        {title: 'Telt', completed: false},
+        {title: 'Sovepose', completed: false},
+        {title: 'Tandbørste', completed: false},
+        {title: 'Drikkevarer (alkohol)', completed: false}
+      ],
+      travel: [
+        {title: 'Flybillet', completed: false},
+        {title: 'Pas', completed: false},
+        {title: 'Tandbørste', completed: false},
+        {title: 'Kuffert', completed: false}
+      ]
     }
   },
   methods: {
